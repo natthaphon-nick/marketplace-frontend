@@ -1,48 +1,49 @@
-import Image from 'next/image';
+import { ReactNode } from 'react';
 
 const features = [
     {
-        title: 'Scalable Architecture',
-        description: 'Built to grow with your business, handling millions of users effortlessly.',
-        icon: '/icons/scalable.svg',
+        title: 'Premium Materials',
+        description: 'Sourced from the finest sustainable materials to ensure quality and longevity.',
+        icon: '✨',
     },
     {
-        title: 'Real‑time Analytics',
-        description: 'Instant insights with live dashboards and customizable reports.',
-        icon: '/icons/analytics.svg',
+        title: 'Express Delivery',
+        description: 'Get your statement pieces delivered worldwide within 3-5 business days.',
+        icon: '🚀',
     },
     {
-        title: 'Secure & Compliant',
-        description: 'Enterprise‑grade security, GDPR, SOC2, and ISO certifications.',
-        icon: '/icons/secure.svg',
+        title: 'Exclusive Designs',
+        description: 'Limited edition drops and unique collaborations you won\'t find anywhere else.',
+        icon: '💎',
     },
     {
-        title: 'Customizable Themes',
-        description: 'Easily adapt the look and feel to match your brand.',
-        icon: '/icons/theme.svg',
+        title: 'Secure Checkout',
+        description: 'Encrypted, seamless payments ensuring your shopping experience is completely safe.',
+        icon: '🔒',
     },
 ];
 
 export default function Features() {
     return (
-        <section id="features" className="py-20 bg-gray-50 dark:bg-gray-900">
-            <div className="max-w-6xl mx-auto px-4">
-                <h2 className="text-3xl font-bold text-center mb-12 text-gray-800 dark:text-gray-100">
-                    Features
-                </h2>
+        <section id="features" className="py-24 bg-[#050505] border-t border-white/5">
+            <div className="max-w-7xl mx-auto px-6">
+                <div className="text-center mb-16">
+                    <span className="text-pink-500 font-bold uppercase tracking-widest text-sm">Why Choose Us</span>
+                    <h2 className="text-4xl md:text-5xl font-black text-white mt-2">THE PREMIUM EXPERIENCE</h2>
+                </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {features.map((feat, idx) => (
                         <div
                             key={idx}
-                            className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow"
+                            className="bg-[#111] rounded-3xl p-8 border border-white/10 hover:border-pink-500/50 hover:-translate-y-2 transition-all duration-300 group"
                         >
-                            <div className="flex items-center justify-center mb-4">
-                                <Image src={feat.icon} alt={feat.title} width={48} height={48} />
+                            <div className="w-14 h-14 bg-gradient-to-br from-pink-500/20 to-violet-600/20 rounded-2xl flex items-center justify-center mb-6 text-2xl group-hover:scale-110 transition-transform">
+                                <span>{feat.icon}</span>
                             </div>
-                            <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-gray-100">
+                            <h3 className="text-xl font-bold mb-3 text-white group-hover:text-pink-500 transition-colors">
                                 {feat.title}
                             </h3>
-                            <p className="text-gray-600 dark:text-gray-300 text-sm">
+                            <p className="text-gray-400 text-sm leading-relaxed">
                                 {feat.description}
                             </p>
                         </div>

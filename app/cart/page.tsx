@@ -59,9 +59,8 @@ export default function CartPage() {
                 return;
             }
 
-            await createOrder();
-            alert('Order placed successfully!');
-            refreshCart();
+            // Redirect to dedicated checkout flow
+            router.push('/checkout');
         } catch (error) {
             console.error('Checkout failed:', error);
             alert('Checkout failed. Please try again.');

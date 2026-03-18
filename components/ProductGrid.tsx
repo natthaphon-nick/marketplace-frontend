@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { getProducts, addToCart, getProductsByCategory } from '@/services/api';
 import Link from 'next/link';
+import { useWishlist } from '@/context/WishlistContext';
 
 interface Product {
     id: string;
@@ -18,6 +19,7 @@ interface Product {
 export default function ProductGrid({ categoryId }: { categoryId?: string }) {
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(true);
+    const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -46,6 +48,22 @@ export default function ProductGrid({ categoryId }: { categoryId?: string }) {
         }
     };
 
+    const toggleWishlist = (e: React.MouseEvent, product: Product) => {
+        e.preventDefault(); // Prevent navigating to product detail
+        e.stopPropagation();
+        
+        if (isInWishlist(product.id)) {
+            removeFromWishlist(product.id);
+        } else {
+            addToWishlist({
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                imageUrl: product.images?.[0]?.imageUrl
+            });
+        }
+    };
+
     if (loading) {
         return (
             <div className="bg-[#050505] py-24 px-6 text-center text-white">
@@ -71,16 +89,42 @@ export default function ProductGrid({ categoryId }: { categoryId?: string }) {
                         return (
                             <div key={product.id} className="group relative flex flex-col">
                                 <Link href={`/products/${product.id}`} className="block relative aspect-[4/5] bg-[#111] rounded-3xl border border-white/10 overflow-hidden mb-6 transition-all duration-500 group-hover:border-pink-500/50">
-                                    <div className="absolute inset-0 bg-gradient-to-br from-pink-500/20 via-transparent to-violet-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                    <div className="absolute inset-0 bg-gradient-to-br from-pink-500/20 via-transparent to-violet-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
+                                    
+                                    {/* Wishlist Button */}
+                                    <button 
+                                        onClick={(e) => toggleWishlist(e, product)}
+                                        className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-white border border-white/20 hover:bg-white/20 transition-all hover:scale-110"
+                                    >
+                                        <svg 
+                                            xmlns="http://www.w3.org/2000/svg" 
+                                            fill={isInWishlist(product.id) ? "currentColor" : "none"}
+                                            viewBox="0 0 24 24" 
+                                            strokeWidth={1.5} 
+                                            stroke="currentColor" 
+                                            className={`w-5 h-5 ${isInWishlist(product.id) ? 'text-pink-500' : 'text-white'}`}
+                                        >
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                                        </svg>
+                                    </button>
 
-                                    {/* Product Image */}
-                                    <div className="w-full h-full flex items-center justify-center">
+                                    {/* Product Image and Hover Effect */}
+                                    <div className="w-full h-full relative flex items-center justify-center">
                                         {product.images?.[0] ? (
-                                            <img
-                                                src={product.images[0].imageUrl}
-                                                alt={product.name}
-                                                className="w-full h-full object-cover"
-                                            />
+                                            <>
+                                                <img
+                                                    src={product.images[0].imageUrl}
+                                                    alt={product.name}
+                                                    className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${product.images.length > 1 ? 'group-hover:opacity-0' : 'group-hover:scale-110'}`}
+                                                />
+                                                {product.images.length > 1 && (
+                                                    <img
+                                                        src={product.images[1].imageUrl}
+                                                        alt={`${product.name} alternate view`}
+                                                        className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-700 group-hover:opacity-100 group-hover:scale-110"
+                                                    />
+                                                )}
+                                            </>
                                         ) : (
                                             <div className="text-[#1a1a1a] text-8xl font-black select-none pointer-events-none">
                                                 {product.name.charAt(0)}

@@ -10,7 +10,7 @@ export default function Hero() {
 
             <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
                 <div className="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-widest text-pink-500 uppercase bg-pink-500/10 border border-pink-500/20 rounded-full">
-                    New Winter Collection 2024
+                    New Winter Collection 2026
                 </div>
                 <h1 className="text-6xl md:text-8xl font-black mb-8 leading-[1.1] tracking-tighter">
                     STYLE BEYOND <br />
@@ -25,7 +25,7 @@ export default function Hero() {
                     <Button href="#shop" variant="primary" className="h-14 px-10 text-lg rounded-2xl bg-gradient-to-r from-pink-600 to-violet-600 hover:scale-105 transition-transform">
                         Shop Collection
                     </Button>
-                    <Button href="#categories" variant="secondary" className="h-14 px-10 text-lg rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+                    <Button href="/categories" variant="secondary" className="h-14 px-10 text-lg rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
                         View Categories
                     </Button>
                 </div>
