@@ -16,12 +16,7 @@ export default function WishlistPage() {
 
     const handleMoveToCart = async (productId: string) => {
         try {
-            await addToCart(productId, 1);
-            refreshCart();
-            removeFromWishlist(productId);
-            // Optional: User might want to stay on the wishlist or go to cart
-            // router.push('/cart'); 
-            alert('Moved to cart!');
+            router.push(`/products/${productId}`);
         } catch (error) {
             console.error('Failed to move to cart:', error);
             alert('Failed to add to cart. Please login.');
@@ -46,7 +41,7 @@ export default function WishlistPage() {
                         {wishlistItems.map((item) => (
                             <div key={item.id} className="group relative flex flex-col bg-[#111] rounded-3xl border border-white/10 overflow-hidden hover:border-pink-500/50 transition-colors duration-500">
                                 {/* Remove button */}
-                                <button 
+                                <button
                                     onClick={() => removeFromWishlist(item.id)}
                                     className="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center text-gray-400 hover:text-white hover:bg-black transition-all"
                                     title="Remove from wishlist"
@@ -75,7 +70,7 @@ export default function WishlistPage() {
                                             <h3 className="text-lg font-bold text-white group-hover:text-pink-500 transition-colors leading-tight">{item.name}</h3>
                                         </Link>
                                     </div>
-                                    
+
                                     <div className="mt-auto">
                                         <div className="text-xl font-black text-white mb-4">${item.price}</div>
                                         <button

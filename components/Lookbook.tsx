@@ -3,21 +3,21 @@ import Link from 'next/link';
 
 const categories = [
     {
-        id: 'sneakers',
+        id: 'c98ff772-b25b-4819-a358-28d22d5c0e95',
         title: 'SNEAKERS',
         subtitle: 'Engineered for the streets.',
         image: 'https://images.unsplash.com/photo-1552346154-21d32810baa3?q=80&w=2000&auto=format&fit=crop', // Fallback Unsplash image
         color: 'from-pink-500/80 to-transparent'
     },
     {
-        id: 'outerwear',
+        id: 'a648d0cf-1dd5-40d0-8657-8ee153f71846',
         title: 'OUTERWEAR',
         subtitle: 'Defy the elements.',
         image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=2000&auto=format&fit=crop',
         color: 'from-violet-600/80 to-transparent'
     },
     {
-        id: 'accessories',
+        id: '12e7b8b6-c2e0-4e7b-8769-a4d63fcfa50a',
         title: 'ACCESSORIES',
         subtitle: 'The final touch.',
         image: 'https://images.unsplash.com/photo-1523206489230-c012c64b2b48?q=80&w=2000&auto=format&fit=crop',
@@ -41,17 +41,17 @@ export default function Lookbook() {
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[800px] lg:h-[600px]">
                     {categories.map((category, idx) => (
-                        <Link 
-                            key={category.id} 
+                        <Link
+                            key={category.id}
                             href={`/categories/${category.id}`}
                             className={`group relative overflow-hidden rounded-3xl ${idx === 0 ? 'lg:col-span-2 lg:row-span-2' : ''}`}
                         >
                             {/* Background Image */}
-                            <div 
+                            <div
                                 className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
                                 style={{ backgroundImage: `url(${category.image})` }}
                             ></div>
-                            
+
                             {/* Overlay */}
                             <div className={`absolute inset-0 bg-gradient-to-t ${category.color} opacity-60 group-hover:opacity-80 transition-opacity duration-500`}></div>
                             <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500"></div>
