@@ -1,31 +1,40 @@
-import React from 'react';
+'use client';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { getCategories } from '@/services/api';
 
-const categories = [
-    {
-        id: 'c98ff772-b25b-4819-a358-28d22d5c0e95',
-        title: 'SNEAKERS',
-        subtitle: 'Engineered for the streets.',
-        image: 'https://images.unsplash.com/photo-1552346154-21d32810baa3?q=80&w=2000&auto=format&fit=crop', // Fallback Unsplash image
-        color: 'from-pink-500/80 to-transparent'
-    },
-    {
-        id: 'a648d0cf-1dd5-40d0-8657-8ee153f71846',
-        title: 'OUTERWEAR',
-        subtitle: 'Defy the elements.',
-        image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=2000&auto=format&fit=crop',
-        color: 'from-violet-600/80 to-transparent'
-    },
-    {
-        id: '12e7b8b6-c2e0-4e7b-8769-a4d63fcfa50a',
-        title: 'ACCESSORIES',
-        subtitle: 'The final touch.',
-        image: 'https://images.unsplash.com/photo-1523206489230-c012c64b2b48?q=80&w=2000&auto=format&fit=crop',
-        color: 'from-blue-600/80 to-transparent'
-    }
-];
 
 export default function Lookbook() {
+
+
+    const [categories, setCategories] = useState<any>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const result = await getCategories({ pageSize: 3 }); // Get all for listing
+                setCategories(result.data);
+            } catch (error) {
+                console.error('Failed to fetch categories:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchCategories();
+    }, []);
+
+
+    if (loading) {
+        return (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                {[1, 2, 3, 4, 5, 6].map(i => (
+                    <div key={i} className="aspect-[4/3] bg-white/5 rounded-[2rem] animate-pulse border border-white/5" />
+                ))}
+            </div>
+        );
+    }
+
     return (
         <section id="lookbook" className="py-24 bg-[#050505] border-t border-white/5">
             <div className="max-w-[1400px] mx-auto px-6">
@@ -40,7 +49,7 @@ export default function Lookbook() {
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[800px] lg:h-[600px]">
-                    {categories.map((category, idx) => (
+                    {categories.map((category: any, idx: number) => (
                         <Link
                             key={category.id}
                             href={`/categories/${category.id}`}
@@ -49,7 +58,7 @@ export default function Lookbook() {
                             {/* Background Image */}
                             <div
                                 className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                                style={{ backgroundImage: `url(${category.image})` }}
+                                style={{ backgroundImage: `url(${category.imageUrl})` }}
                             ></div>
 
                             {/* Overlay */}
@@ -59,8 +68,8 @@ export default function Lookbook() {
                             {/* Content */}
                             <div className="absolute bottom-0 left-0 p-8 md:p-12 w-full flex justify-between items-end">
                                 <div>
-                                    <p className="text-white/80 font-medium mb-2">{category.subtitle}</p>
-                                    <h3 className="text-4xl md:text-5xl font-black text-white tracking-tighter">{category.title}</h3>
+                                    <p className="text-white/80 font-medium mb-2">{category.name}</p>
+                                    <h3 className="text-4xl md:text-5xl font-black text-white tracking-tighter">{category.name}</h3>
                                 </div>
                                 <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
                                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
